@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+<body>
+<canvas id="draw" width="800" height="800"></canvas>
+<script>
+  const canvas = document.querySelector('#draw')
+  const context = canvas.getContext('2d')
+
+  canvas.width = window.innerWidth
+  canvas.height = window.innerHeight
+
+  context.strokeStyle = '#bada55'
+  context.lineJoin = 'round'
+  context.lineCap = 'round'
+  context.lineWidth = 50
+  context.globalCompositeOperation = 'difference'
+
+  let isDrawing = false
+  let lastX = 0
+  let lastY = 0
+  let hue = 0;
+  let direction = true;
+
+  // function to draw on the canvas
+  function draw(e) {
+    // Draw only when the mouse is down
+    if(isDrawing)
+    {
+      context.strokeStyle = `hsl(${hue},50%,50%)`
+
+      hue++;
+      context.beginPath()
+      context.moveTo(lastX, lastY)
+      context.lineTo(e.offsetX, e.offsetY)
+      context.stroke();
+      // ES6 destructuring an array
+      // Can set up multiple variables at the same time
+      [lastX, lastY] = [e.offsetX, e.offsetY]
+
+
+      if(direction)
+      {
+        context.lineWidth++;
+        if(context.lineWidth >= 100)
+        {
+          direction = !direction;
+        }
+      }
+      else
+      {
+        context.lineWidth--;
+        if(context.lineWidth <= 1)
+        {
+          direction = !direction;
+        }
+      }
+
+
+    }
+
+  }
+
+  canvas.addEventListener('mousemove', draw)
+
+  // ES6 arrow function to update isDrawing bool
+  canvas.addEventListener('mousedown', (e) => {
+    isDrawing= true;
+    [lastX, lastY] = [e.offsetX, e.offsetY]
+  })
+  canvas.addEventListener('mouseup', () => isDrawing= false)
+  canvas.addEventListener('mouseout', () => isDrawing= false)
+
+</script>
+
+<style>
+  html, body {
+    margin:0;
+  }
+</style>
+
+</body>
+</html>

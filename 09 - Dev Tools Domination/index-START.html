@@ -17,29 +17,47 @@
       p.style.fontSize = '50px';
     }
 
-    // Regular
+    const p = document.querySelector('p')
 
+    // Regular
+    console.log('hi')
     // Interpolated
 
     // Styled
-
+    // you can style your console log
+    console.log('%c I am testing the console style', 'color: #bada55')
     // warning!
-
+    // warning message in yellow
+    console.warn('warning bitch')
     // Error :|
-
+    // show an error message in red
+    console.error('error bitch')
     // Info
-
+    console.info('info bitch')
     // Testing
-
+    // Only if the assertion is wrong, show a message
+    console.assert(document.querySelector("#pop"), "that is wrong")
     // clearing
-
+    console.clear();
     // Viewing DOM Elements
-
+    // View the methods and attributes of an element
+    console.dir(p)
     // Grouping together
 
     // counting
 
     // timing
+
+    console.time('test');
+
+    fetch('http://pokeapi.co/api/v2/pokemon/1')
+      .then(data => data.json())
+      .then(data => {
+        console.timeEnd('test');
+        console.log(data)
+    })
+
+    console.table(dogs)
 
   </script>
 </body>

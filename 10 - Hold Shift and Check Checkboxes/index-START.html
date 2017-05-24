@@ -99,6 +99,34 @@
   </div>
 
 <script>
+  // Save if Shift key is pressed
+  let isShiftPressed = false;
+  document.addEventListener('keydown', k => {
+    isShiftPressed = k.key === 'Shift';
+  })
+  // On keyup, set back the bool to false
+  document.addEventListener('keyup', () => isShiftPressed = false)
+
+  // All checkboxes
+  const checkboxes = document.querySelectorAll("input[type='checkbox']")
+  // Keeps the last selection idx
+  let lastSelection;
+  // bind all checkboxes click
+  checkboxes.forEach((ck,idx) => ck.addEventListener('click',e => {
+    // If we checked a box before and if the shift key is pressed
+    if (isShiftPressed && lastSelection !== undefined) {
+      // We loop from the last checked index to the current one.
+      // If the last index is greater than our current selection, loop is a decreasing
+      for (var i = lastSelection; (lastSelection < idx? i < idx : i> idx); (lastSelection < idx? i++:i--)) {
+        document.querySelectorAll('input[type="checkbox"]')[i].checked = document.querySelectorAll('input[type="checkbox"]')[lastSelection].checked;
+        // Set the value the same as the last selection
+      }
+    }
+
+    lastSelection = idx;
+
+  }))
+
 </script>
 </body>
 </html>
